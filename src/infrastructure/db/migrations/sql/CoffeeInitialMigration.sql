@@ -1,4 +1,4 @@
-﻿CREATE TABLE "Role" (
+﻿CREATE TABLE "Roles" (
     "Id" integer   NOT NULL,
     "Nombre" character varying   NOT NULL,
     "Descripcion" character varying   NOT NULL,
@@ -7,7 +7,7 @@
      )
 );
 
-CREATE TABLE "Usuario" (
+CREATE TABLE "Usuarios" (
     "Id" integer   NOT NULL,
     "Correo" character varying   NOT NULL,
     "Contraseña" character varying   NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE "Usuario" (
      )
 );
 
-CREATE TABLE "Caficultor" (
+CREATE TABLE "Caficultores" (
     "Id" integer   NOT NULL,
     "Nombre" character varying   NOT NULL,
     "Apellidos" character varying   NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE "Caficultor" (
      )
 );
 
-CREATE TABLE "Recolector" (
+CREATE TABLE "Recolectores" (
     "Id" integer   NOT NULL,
     "CaficultorID" integer   NOT NULL,
     "Name" character varying   NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE "Recolector" (
      )
 );
 
-CREATE TABLE "Finca" (
+CREATE TABLE "Fincas" (
     "Id" integer   NOT NULL,
     "CaficultorID" integer   NOT NULL,
     "Nombre" character varying   NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE "Finca" (
      )
 );
 
-CREATE TABLE "Zona" (
+CREATE TABLE "Zonas" (
     "Id" integer   NOT NULL,
     "FincaID" integer   NOT NULL,
     "Nombre" character varying   NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE "TipoRecoleccion" (
     )
 );
 
-CREATE TABLE "Periodo" (
+CREATE TABLE "Periodos" (
     "Id" integer   NOT NULL,
     "TipoRecoleccionID" integer   NOT NULL,
     "Desde" date   NOT NULL,
@@ -101,32 +101,32 @@ CREATE TABLE "RegistroDeRecoleccion" (
      )
 );
 
-ALTER TABLE "Usuario" ADD CONSTRAINT "fk_Usuario_Role" FOREIGN KEY("Role")
-REFERENCES "Role" ("Id");
+ALTER TABLE "Usuarios" ADD CONSTRAINT "fk_Usuario_Role" FOREIGN KEY("Role")
+REFERENCES "Roles" ("Id");
 
-ALTER TABLE "Caficultor" ADD CONSTRAINT "fk_Caficultor_UsuarioID" FOREIGN KEY("UsuarioID")
-REFERENCES "Usuario" ("Id");
+ALTER TABLE "Caficultores" ADD CONSTRAINT "fk_Caficultor_UsuarioID" FOREIGN KEY("UsuarioID")
+REFERENCES "Usuarios" ("Id");
 
-ALTER TABLE "Recolector" ADD CONSTRAINT "fk_Recolector_CaficultorID" FOREIGN KEY("CaficultorID")
-REFERENCES "Caficultor" ("Id");
+ALTER TABLE "Recolectores" ADD CONSTRAINT "fk_Recolector_CaficultorID" FOREIGN KEY("CaficultorID")
+REFERENCES "Caficultores" ("Id");
 
-ALTER TABLE "Finca" ADD CONSTRAINT "fk_Finca_CaficultorID" FOREIGN KEY("CaficultorID")
-REFERENCES "Caficultor" ("Id");
+ALTER TABLE "Fincas" ADD CONSTRAINT "fk_Finca_CaficultorID" FOREIGN KEY("CaficultorID")
+REFERENCES "Caficultores" ("Id");
 
-ALTER TABLE "Zona" ADD CONSTRAINT "fk_Zona_FincaID" FOREIGN KEY("FincaID")
-REFERENCES "Finca" ("Id");
+ALTER TABLE "Zonas" ADD CONSTRAINT "fk_Zona_FincaID" FOREIGN KEY("FincaID")
+REFERENCES "Fincas" ("Id");
 
-ALTER TABLE "Periodo" ADD CONSTRAINT "fk_Periodo_TipoRecoleccionID" FOREIGN KEY("TipoRecoleccionID")
+ALTER TABLE "Periodos" ADD CONSTRAINT "fk_Periodo_TipoRecoleccionID" FOREIGN KEY("TipoRecoleccionID")
 REFERENCES "TipoRecoleccion" ("Id");
 
-ALTER TABLE "Periodo" ADD CONSTRAINT "fk_Periodo_CaficultorID" FOREIGN KEY("CaficultorID")
-REFERENCES "Caficultor" ("Id");
+ALTER TABLE "Periodos" ADD CONSTRAINT "fk_Periodo_CaficultorID" FOREIGN KEY("CaficultorID")
+REFERENCES "Caficultores" ("Id");
 
 ALTER TABLE "RegistroDeRecoleccion" ADD CONSTRAINT "fk_RegistroDeRecoleccion_ZonaID" FOREIGN KEY("ZonaID")
-REFERENCES "Zona" ("Id");
+REFERENCES "Zonas" ("Id");
 
 ALTER TABLE "RegistroDeRecoleccion" ADD CONSTRAINT "fk_RegistroDeRecoleccion_RecolectorID" FOREIGN KEY("RecolectorID")
-REFERENCES "Recolector" ("Id");
+REFERENCES "Recolectores" ("Id");
 
 ALTER TABLE "RegistroDeRecoleccion" ADD CONSTRAINT "fk_RegistroDeRecoleccion_PeriodoID" FOREIGN KEY("PeriodoID")
-REFERENCES "Periodo" ("Id");
+REFERENCES "Periodos" ("Id");
