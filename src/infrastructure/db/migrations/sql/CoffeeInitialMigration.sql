@@ -1,61 +1,60 @@
-﻿
-CREATE TABLE "Role" (
-    "Id" int   NOT NULL,
-    "Nombre" string   NOT NULL,
-    "Descripcion" string   NOT NULL,
+﻿CREATE TABLE "Role" (
+    "Id" integer   NOT NULL,
+    "Nombre" character varying   NOT NULL,
+    "Descripcion" character varying   NOT NULL,
     CONSTRAINT "pk_Role" PRIMARY KEY (
         "Id"
      )
 );
 
 CREATE TABLE "Usuario" (
-    "Id" int   NOT NULL,
-    "Correo" string   NOT NULL,
-    "Contraseña" string   NOT NULL,
-    "Role" int   NOT NULL,
+    "Id" integer   NOT NULL,
+    "Correo" character varying   NOT NULL,
+    "Contraseña" character varying   NOT NULL,
+    "Role" integer   NOT NULL,
     CONSTRAINT "pk_Usuario" PRIMARY KEY (
         "Id"
      )
 );
 
 CREATE TABLE "Caficultor" (
-    "Id" int   NOT NULL,
-    "Nombre" string   NOT NULL,
-    "Apellidos" string   NOT NULL,
-    "UsuarioID" int   NOT NULL,
+    "Id" integer   NOT NULL,
+    "Nombre" character varying   NOT NULL,
+    "Apellidos" character varying   NOT NULL,
+    "UsuarioID" integer   NOT NULL,
     CONSTRAINT "pk_Caficultor" PRIMARY KEY (
         "Id"
      )
 );
 
 CREATE TABLE "Recolector" (
-    "Id" int   NOT NULL,
-    "CaficultorID" int   NOT NULL,
-    "Name" string   NOT NULL,
-    "Apellidos" string   NULL,
-    "Identificacion" string   NULL,
-    "Cel" number   NULL,
+    "Id" integer   NOT NULL,
+    "CaficultorID" integer   NOT NULL,
+    "Name" character varying   NOT NULL,
+    "Apellidos" character varying   NULL,
+    "Identificacion" character varying   NULL,
+    "Cel" integer   NULL,
     CONSTRAINT "pk_Recolector" PRIMARY KEY (
         "Id"
      )
 );
 
 CREATE TABLE "Finca" (
-    "Id" int   NOT NULL,
-    "CaficultorID" int   NOT NULL,
-    "Nombre" string   NOT NULL,
-    "Ubicacion" string   NULL,
-    "Descripcion" string   NULL,
+    "Id" integer   NOT NULL,
+    "CaficultorID" integer   NOT NULL,
+    "Nombre" character varying   NOT NULL,
+    "Ubicacion" character varying   NULL,
+    "Descripcion" character varying   NULL,
     CONSTRAINT "pk_Finca" PRIMARY KEY (
         "Id"
      )
 );
 
 CREATE TABLE "Zona" (
-    "Id" int   NOT NULL,
-    "FincaID" int   NOT NULL,
-    "Nombre" string   NOT NULL,
-    "Descripcion" string   NULL,
+    "Id" integer   NOT NULL,
+    "FincaID" integer   NOT NULL,
+    "Nombre" character varying   NOT NULL,
+    "Descripcion" character varying   NULL,
     CONSTRAINT "pk_Zona" PRIMARY KEY (
         "Id"
      ),
@@ -65,8 +64,8 @@ CREATE TABLE "Zona" (
 );
 
 CREATE TABLE "TipoRecoleccion" (
-    "Id" int   NOT NULL,
-    "Nombre" string   NOT NULL,
+    "Id" integer   NOT NULL,
+    "Nombre" character varying   NOT NULL,
     CONSTRAINT "pk_TipoRecoleccion" PRIMARY KEY (
         "Id"
      ),
@@ -76,25 +75,25 @@ CREATE TABLE "TipoRecoleccion" (
 );
 
 CREATE TABLE "Periodo" (
-    "Id" int   NOT NULL,
-    "TipoRecoleccionID" int   NOT NULL,
+    "Id" integer   NOT NULL,
+    "TipoRecoleccionID" integer   NOT NULL,
     "Desde" date   NOT NULL,
     "Hasta" date   NOT NULL,
     "Value" money   NOT NULL,
     "Modificado" date   NOT NULL,
-    "CaficultorID" int   NOT NULL,
+    "CaficultorID" integer   NOT NULL,
     CONSTRAINT "pk_Periodo" PRIMARY KEY (
         "Id"
      )
 );
 
 CREATE TABLE "RegistroDeRecoleccion" (
-    "Id" int   NOT NULL,
-    "ZonaID" int   NOT NULL,
-    "RecolectorID" int   NOT NULL,
-    "PeriodoID" int   NOT NULL,
-    "Cajuelas" int   NOT NULL,
-    "Cuartillos" int   NOT NULL,
+    "Id" integer   NOT NULL,
+    "ZonaID" integer   NOT NULL,
+    "RecolectorID" integer   NOT NULL,
+    "PeriodoID" integer   NOT NULL,
+    "Cajuelas" integer   NOT NULL,
+    "Cuartillos" integer   NOT NULL,
     "Creado" date   NOT NULL,
     "Modificado" date   NOT NULL,
     CONSTRAINT "pk_RegistroDeRecoleccion" PRIMARY KEY (
@@ -131,4 +130,3 @@ REFERENCES "Recolector" ("Id");
 
 ALTER TABLE "RegistroDeRecoleccion" ADD CONSTRAINT "fk_RegistroDeRecoleccion_PeriodoID" FOREIGN KEY("PeriodoID")
 REFERENCES "Periodo" ("Id");
-
