@@ -12,15 +12,16 @@ import { UsersModule } from './users/users.module';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres' as const,
-        host: configService.get('HOST'),
-        port: parseInt(configService.get<string>('PORT')),
-        username: configService.get<string>('USER'),
-        password: configService.get<string>('PSW'),
-        database: configService.get<string>('DATABASE'),
+        host: 'localhost',
+        port: 5432,
+        username: 'postgres',
+        password: 'coffee1234',
+        database: 'postgres',
+        autoLoadEntities: true,
       }),
     }),
-    UsersModule,
     HealthChecksModule,
+    UsersModule,
   ],
 })
 export class AppModule {}

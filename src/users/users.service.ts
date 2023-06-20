@@ -1,11 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UsersRepository } from './users.repository';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(private readonly userRepository: UsersRepository) {}
+
+  async create(createUserDto: CreateUserDto) {
+    if (await this.userRepository.getUserByEmail(createUserDto.Correo)) {
+      throw new HttpException(
+        `Ya existe un usuario con el correo ${createUserDto.Correo}`,
+        HttpStatus.CONFLICT,
+      );
+    }
+
+    return await this.userRepository.createUser(createUserDto);
   }
 
   findAll() {
@@ -18,9 +28,5 @@ export class UsersService {
 
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
   }
 }

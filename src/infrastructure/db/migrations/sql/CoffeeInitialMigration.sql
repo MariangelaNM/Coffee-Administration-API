@@ -8,10 +8,12 @@
 );
 
 CREATE TABLE "Usuarios" (
-    "Id" integer   NOT NULL,
+    "Id" serial   NOT NULL,
     "Correo" character varying   NOT NULL,
-    "Contraseña" character varying   NOT NULL,
+    "Contrasena" character varying   NOT NULL,
     "Role" integer   NOT NULL,
+    "createdAt" date   NOT NULL,
+    "updatedAt" date   NOT NULL,
     CONSTRAINT "pk_Usuario" PRIMARY KEY (
         "Id"
      )
