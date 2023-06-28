@@ -10,10 +10,15 @@ export class UsersRepository {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async createUser(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.userRepository.create(createUserDto);
-    await this.userRepository.save(user);
-    return user;
+  async createUser(createUserDto: CreateUserDto) {
+    const user = await this.userRepository.insert({
+      Correo: createUserDto.Correo,
+      Contrasena: createUserDto.Contrasena,
+      Role: createUserDto.Role,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    return true;
   }
 
   async getUsers(): Promise<User[]> {
