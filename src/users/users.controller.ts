@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  HttpStatus,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -20,14 +22,9 @@ export class UsersController {
     return await this.usersService.create(createUserDto);
   }
 
-  @Get()
-  findAll() {
-    return this.usersService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @Post('/login')
+  iniciarSesion(@Body() createUserDto: LoginUserDto) {
+    return HttpStatus.NOT_IMPLEMENTED;
   }
 
   @Patch(':id')
