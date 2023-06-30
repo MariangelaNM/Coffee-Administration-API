@@ -1,10 +1,4 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('Usuarios')
 export class User {
@@ -18,11 +12,17 @@ export class User {
   Contrasena: string;
 
   @Column()
+  Nombres: string;
+
+  @Column()
+  Apellidos: string;
+
+  @Column()
   Role: number;
 
-  @CreateDateColumn({ default: () => 'CURRENT_TIMESTAMP' })
+  @Column()
   createdAt: Date;
 
-  @UpdateDateColumn({ default: () => 'CURRENT_TIMESTAMP' })
+  @Column()
   updatedAt: Date;
 }

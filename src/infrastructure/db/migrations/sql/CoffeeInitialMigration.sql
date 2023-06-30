@@ -11,9 +11,11 @@ CREATE TABLE "Usuarios" (
     "Id" serial   NOT NULL,
     "Correo" character varying   NOT NULL,
     "Contrasena" character varying   NOT NULL,
+    "Nombres" character varying   NOT NULL,
+    "Apellidos" character varying   NOT NULL,
     "Role" integer   NOT NULL,
-    "createdAt" date   NOT NULL,
-    "updatedAt" date   NOT NULL,
+    "createdAt" timestamp NOT NULL,
+    "updatedAt" timestamp NOT NULL,
     CONSTRAINT "pk_Usuario" PRIMARY KEY (
         "Id"
      )

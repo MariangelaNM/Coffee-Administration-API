@@ -1,39 +1,93 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Validators } from 'src/helpers/Validators';
+import { CoffeeCrypto } from 'src/helpers/bycript/CoffeeCrypto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './users.repository';
-import { CoffeeCrypto } from 'src/helpers/bycript/CoffeeCrypto';
 
 @Injectable()
 export class UsersService {
   constructor(
     private readonly userRepository: UsersRepository,
     private readonly coffeeCrypto: CoffeeCrypto,
+    private readonly validators: Validators,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    if (await this.userRepository.getUserByEmail(createUserDto.Correo)) {
+    try {
+      this.validators.ValidatePayloadKeys(createUserDto);
+
+      if (await this.userRepository.getUserByEmail(createUserDto.Correo)) {
+        throw new HttpException(
+          `Ya existe un usuario con el correo ${createUserDto.Correo}`,
+          HttpStatus.CONFLICT,
+        );
+      }
+
+      createUserDto.Contrasena = await this.coffeeCrypto.HashPassword(
+        createUserDto.Contrasena,
+      );
+      return await this.userRepository.createUser(createUserDto);
+    } catch (error) {
       throw new HttpException(
-        `Ya existe un usuario con el correo ${createUserDto.Correo}`,
-        HttpStatus.CONFLICT,
+        error.message,
+        error.status ? error.status : HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-
-    createUserDto.Contrasena = await this.coffeeCrypto.HashPassword(
-      createUserDto.Contrasena,
-    );
-    return await this.userRepository.createUser(createUserDto);
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async updateUser(email: string, updateUserDto: UpdateUserDto) {
+    try {
+      this.validators.ValidatePayloadKeys(updateUserDto);
+
+      let user = await this.userRepository.getUserByEmail(email);
+
+      if (!user) {
+        throw new HttpException(
+          `No existe un usuario con el correo ${updateUserDto.Correo}`,
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      updateUserDto.Contrasena = await this.coffeeCrypto.HashPassword(
+        updateUserDto.Contrasena,
+      );
+
+      user = {
+        ...user,
+        ...updateUserDto,
+      };
+
+      user.updatedAt = new Date();
+      user.Nombres = user.Nombres.trim();
+      user.Apellidos = user.Apellidos.trim();
+
+      return this.userRepository.updateUser(user);
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status ? error.status : HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
+  async deleteUser(email: string) {
+    try {
+      const user = await this.userRepository.getUserByEmail(email);
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+      if (!user) {
+        throw new HttpException(
+          `No existe un usuario con el correo ${email}`,
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return this.userRepository.deleteUser(user);
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status ? error.status : HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }
