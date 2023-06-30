@@ -2,10 +2,14 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './users.repository';
+import { CoffeeCrypto } from 'src/helpers/bycript/CoffeeCrypto';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly userRepository: UsersRepository) {}
+  constructor(
+    private readonly userRepository: UsersRepository,
+    private readonly coffeeCrypto: CoffeeCrypto,
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     if (await this.userRepository.getUserByEmail(createUserDto.Correo)) {
@@ -15,6 +19,9 @@ export class UsersService {
       );
     }
 
+    createUserDto.Contrasena = await this.coffeeCrypto.HashPassword(
+      createUserDto.Contrasena,
+    );
     return await this.userRepository.createUser(createUserDto);
   }
 
