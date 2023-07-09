@@ -1,5 +1,5 @@
 ﻿CREATE TABLE "Roles" (
-    "Id" integer   NOT NULL,
+    "Id" serial  NOT NULL,
     "Nombre" character varying   NOT NULL,
     "Descripcion" character varying   NOT NULL,
     CONSTRAINT "pk_Role" PRIMARY KEY (
@@ -11,16 +11,18 @@ CREATE TABLE "Usuarios" (
     "Id" serial   NOT NULL,
     "Correo" character varying   NOT NULL,
     "Contrasena" character varying   NOT NULL,
+    "Nombres" character varying   NOT NULL,
+    "Apellidos" character varying   NOT NULL,
     "Role" integer   NOT NULL,
-    "createdAt" date   NOT NULL,
-    "updatedAt" date   NOT NULL,
+    "createdAt" timestamp NOT NULL,
+    "updatedAt" timestamp NOT NULL,
     CONSTRAINT "pk_Usuario" PRIMARY KEY (
         "Id"
      )
 );
 
 CREATE TABLE "Caficultores" (
-    "Id" integer   NOT NULL,
+    "Id" serial NOT NULL,
     "Nombre" character varying   NOT NULL,
     "Apellidos" character varying   NOT NULL,
     "UsuarioID" integer   NOT NULL,
@@ -30,7 +32,7 @@ CREATE TABLE "Caficultores" (
 );
 
 CREATE TABLE "Recolectores" (
-    "Id" integer   NOT NULL,
+    "Id" serial NOT NULL,
     "CaficultorID" integer   NOT NULL,
     "Name" character varying   NOT NULL,
     "Apellidos" character varying   NULL,
@@ -42,7 +44,7 @@ CREATE TABLE "Recolectores" (
 );
 
 CREATE TABLE "Fincas" (
-    "Id" integer   NOT NULL,
+    "Id" serial NOT NULL,
     "CaficultorID" integer   NOT NULL,
     "Nombre" character varying   NOT NULL,
     "Ubicacion" character varying   NULL,
@@ -53,7 +55,7 @@ CREATE TABLE "Fincas" (
 );
 
 CREATE TABLE "Zonas" (
-    "Id" integer   NOT NULL,
+    "Id" serial NOT NULL,
     "FincaID" integer   NOT NULL,
     "Nombre" character varying   NOT NULL,
     "Descripcion" character varying   NULL,
@@ -66,7 +68,7 @@ CREATE TABLE "Zonas" (
 );
 
 CREATE TABLE "TipoRecoleccion" (
-    "Id" integer   NOT NULL,
+    "Id" serial NOT NULL,
     "Nombre" character varying   NOT NULL,
     CONSTRAINT "pk_TipoRecoleccion" PRIMARY KEY (
         "Id"
@@ -77,7 +79,7 @@ CREATE TABLE "TipoRecoleccion" (
 );
 
 CREATE TABLE "Periodos" (
-    "Id" integer   NOT NULL,
+    "Id" serial NOT NULL,
     "TipoRecoleccionID" integer   NOT NULL,
     "Desde" date   NOT NULL,
     "Hasta" date   NOT NULL,
@@ -90,7 +92,7 @@ CREATE TABLE "Periodos" (
 );
 
 CREATE TABLE "RegistroDeRecoleccion" (
-    "Id" integer   NOT NULL,
+    "Id" serial NOT NULL,
     "ZonaID" integer   NOT NULL,
     "RecolectorID" integer   NOT NULL,
     "PeriodoID" integer   NOT NULL,
@@ -132,3 +134,5 @@ REFERENCES "Recolectores" ("Id");
 
 ALTER TABLE "RegistroDeRecoleccion" ADD CONSTRAINT "fk_RegistroDeRecoleccion_PeriodoID" FOREIGN KEY("PeriodoID")
 REFERENCES "Periodos" ("Id");
+
+INSERT INTO public."Roles" values((select last_value from public."Roles_Id_seq"),'Administrador', 'Admin');

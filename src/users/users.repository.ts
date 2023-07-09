@@ -1,4 +1,3 @@
-//users typerorm repository
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -10,33 +9,69 @@ export class UsersRepository {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async createUser(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.userRepository.create(createUserDto);
-    await this.userRepository.save(user);
-    return user;
+  async createUser(createUserDto: CreateUserDto) {
+    try {
+      const user = this.userRepository.create({
+        ...createUserDto,
+      });
+
+      user.Nombres = user.Nombres.trim();
+      user.Apellidos = user.Apellidos.trim();
+      user.createdAt = new Date();
+      user.updatedAt = user.createdAt;
+
+      const result = await this.userRepository.save(user);
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async getUsers(): Promise<User[]> {
-    const users = await this.userRepository.find();
-    return users;
+    try {
+      const users = await this.userRepository.find();
+      return users;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async getUserById(Id: number): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { Id } });
-    return user;
+    try {
+      const user = await this.userRepository.findOne({ where: { Id } });
+      return user;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  async updateUser(id: number, createUserDto: CreateUserDto): Promise<User> {
-    const user = await this.getUserById(id);
-    const updateUser = Object.assign(user, createUserDto);
-    await this.userRepository.save(updateUser);
-    return updateUser;
+  async updateUser(user: User): Promise<User> {
+    try {
+      const updateUser = await this.userRepository.save(user);
+      return updateUser;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async getUserByEmail(email: string): Promise<User> {
-    const user = await this.userRepository.findOne({
-      where: { Correo: email },
-    });
-    return user;
+    try {
+      const user = await this.userRepository.findOneBy({
+        Correo: email,
+      });
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteUser(user: User): Promise<boolean> {
+    try {
+      const result = await this.userRepository.delete(user.Id);
+      return result.affected > 0;
+    } catch (error) {
+      throw error;
+    }
   }
 }
