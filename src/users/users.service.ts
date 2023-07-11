@@ -90,4 +90,24 @@ export class UsersService {
       );
     }
   }
+
+  async getUserByEmail(email: string) {
+    try {
+      const user = await this.userRepository.getUserByEmail(email);
+
+      if (!user) {
+        throw new HttpException(
+          `No existe un usuario con el correo ${email}`,
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      return user;
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status ? error.status : HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }
