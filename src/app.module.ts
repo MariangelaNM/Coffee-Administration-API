@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HealthChecksModule } from './health-checks/health-checks.module';
 import { UsersModule } from './users/users.module';
-
+import { FincasModule } from './fincas/fincas.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -22,6 +22,7 @@ import { UsersModule } from './users/users.module';
     }),
     HealthChecksModule,
     UsersModule,
+    FincasModule
   ],
 })
 export class AppModule {}
