@@ -4,3 +4,7 @@ export class CreateFincaDto {
   Ubicacion: string;
   Descripcion: string;
 }
+
+export class FincaDto {
+  CaficultorID: number;
+}

@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Validators } from 'src/helpers/Validators';
-import { CreateFincaDto } from './dto/create-finca.dto';
+import { CreateFincaDto, FincaDto } from './dto/create-finca.dto';
 import { UpdateFincaDto } from './dto/update-finca.dto';
 import { FincasRepository } from './fincas.repository';
 
@@ -23,6 +23,27 @@ export class FincasService {
       );
     }
   }
+
+  async getByCaficultor(createfincaDto: FincaDto) {
+    try {
+      const finca = await this.fincaRepository.getFincaByCaficultorId(
+        createfincaDto.CaficultorID,
+      );
+      if (!finca) {
+        throw new HttpException(
+          `No existe el caficultor ${createfincaDto.CaficultorID}`,
+          HttpStatus.NOT_FOUND,
+        );
+      }
+      return finca;
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status ? error.status : HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   async getById(id: number) {
     try {
       const finca = await this.fincaRepository.getFincaById(id);
@@ -46,7 +67,6 @@ export class FincasService {
 
       let finca = await this.fincaRepository.getFincaById(id);
 
-      
       finca = {
         ...finca,
         ...updatefincaDto,

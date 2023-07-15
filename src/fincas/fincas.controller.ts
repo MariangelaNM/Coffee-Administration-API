@@ -7,8 +7,9 @@ import {
   Param,
   Patch,
   Post,
+  Put,
 } from '@nestjs/common';
-import { CreateFincaDto } from './dto/create-finca.dto';
+import { CreateFincaDto, FincaDto } from './dto/create-finca.dto';
 import { UpdateFincaDto } from './dto/update-finca.dto';
 import { FincasService } from './fincas.service';
 
@@ -25,6 +26,12 @@ export class FincasController {
   @Patch(':id')
   update(@Param('id') id: number, @Body() UpdateFincaDto: UpdateFincaDto) {
     return this.FincasService.updatefinca(id, UpdateFincaDto);
+  }
+  
+  @Put()
+  async put(@Body() FincaDto: FincaDto) {
+    const result = await this.FincasService.getByCaficultor(FincaDto);
+    if (result) return result;
   }
 
   @Get(':id')

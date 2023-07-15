@@ -22,7 +22,6 @@ export class FincasRepository {
 
       const result = await this.fincaRepository.save(finca);
       return result;
-      
     } catch (error) {
       throw error;
     }
@@ -40,6 +39,17 @@ export class FincasRepository {
   async getFincaById(Id: number): Promise<Finca> {
     try {
       const finca = await this.fincaRepository.findOne({ where: { Id } });
+      return finca;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getFincaByCaficultorId(CaficultorID: number): Promise<Finca> {
+    try {
+      const finca = await this.fincaRepository.findOne({
+        where: { CaficultorID },
+      });
       return finca;
     } catch (error) {
       throw error;
