@@ -23,7 +23,23 @@ export class FincasService {
       );
     }
   }
-
+  async getById(id: number) {
+    try {
+      const finca = await this.fincaRepository.getFincaById(id);
+      if (!finca) {
+        throw new HttpException(
+          `No existe la finca con el ID ${id}`,
+          HttpStatus.NOT_FOUND,
+        );
+      }
+      return finca;
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status ? error.status : HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
   async updatefinca(id: number, updatefincaDto: UpdateFincaDto) {
     try {
       this.validators.ValidatePayloadKeys(updatefincaDto);

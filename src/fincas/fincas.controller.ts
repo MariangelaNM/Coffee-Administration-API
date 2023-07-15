@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpStatus,
   Param,
   Patch,
@@ -24,6 +25,11 @@ export class FincasController {
   @Patch(':id')
   update(@Param('id') id: number, @Body() UpdateFincaDto: UpdateFincaDto) {
     return this.FincasService.updatefinca(id, UpdateFincaDto);
+  }
+
+  @Get(':id')
+  get(@Param('id') id: number, @Body() UpdateFincaDto: UpdateFincaDto) {
+    return this.FincasService.getById(id);
   }
 
   @Delete(':id')
