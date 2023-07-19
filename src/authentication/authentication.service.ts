@@ -1,16 +1,22 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CoffeeCrypto } from 'src/helpers/bycript/CoffeeCrypto';
 import { UsersService } from 'src/users/users.service';
 import { SignInDto } from './dto/SignInDto';
+import { JwtService } from '@nestjs/jwt';
+import jwtConfig from 'src/authentication/config/jwt.config';
+import { ConfigType } from '@nestjs/config';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly usersService: UsersService,
     private readonly coffeeCrypto: CoffeeCrypto,
-  ) {}
+    private readonly jwtService: JwtService,
+    @Inject(jwtConfig.KEY)
+    private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
+  ) { }
 
-  async SingIn(createAuthenticationDto: SignInDto) {
+  async LogIn(createAuthenticationDto: SignInDto) {
     const credentials = await this.usersService.getUserByEmail(
       createAuthenticationDto.email,
     );
@@ -28,6 +34,19 @@ export class AuthenticationService {
       throw new UnauthorizedException('Credenciales invalidas.');
     }
 
-    return true;
+    const token = this.jwtService.sign(
+      {
+        sub: credentials.Id,
+        email: credentials.Correo,
+      },
+      {
+        secret: this.jwtConfiguration.secret,
+        expiresIn: this.jwtConfiguration.accessTokenTtl,
+        issuer: this.jwtConfiguration.issuer,
+        audience: this.jwtConfiguration.audience,
+      },
+    );
+
+    return { accessToken: token };
   }
 }

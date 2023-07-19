@@ -26,4 +26,4 @@ import { UsersModule } from './users/users.module';
     AuthenticationModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

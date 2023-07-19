@@ -7,8 +7,8 @@ export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
 
   @HttpCode(HttpStatus.OK)
-  @Post('signin')
+  @Post('login')
   async create(@Body() createAuthenticationDto: SignInDto) {
-    return await this.authenticationService.SingIn(createAuthenticationDto);
+    return await this.authenticationService.LogIn(createAuthenticationDto);
   }
 }
