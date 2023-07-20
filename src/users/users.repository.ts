@@ -15,8 +15,6 @@ export class UsersRepository {
         ...createUserDto,
       });
 
-      user.Nombres = user.Nombres.trim();
-      user.Apellidos = user.Apellidos.trim();
       user.createdAt = new Date();
       user.updatedAt = user.createdAt;
 

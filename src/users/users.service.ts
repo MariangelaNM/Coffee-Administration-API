@@ -59,8 +59,6 @@ export class UsersService {
       };
 
       user.updatedAt = new Date();
-      user.Nombres = user.Nombres.trim();
-      user.Apellidos = user.Apellidos.trim();
 
       return this.userRepository.updateUser(user);
     } catch (error) {
