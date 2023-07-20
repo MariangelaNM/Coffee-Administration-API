@@ -31,7 +31,7 @@ export class FincasService {
       );
       if (!finca) {
         throw new HttpException(
-          `No existe el caficultor ${createfincaDto.CaficultorID}`,
+          `No existe fincas para el caficultor ${createfincaDto.CaficultorID}`,
           HttpStatus.NOT_FOUND,
         );
       }
