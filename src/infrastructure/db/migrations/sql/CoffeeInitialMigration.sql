@@ -10,9 +10,7 @@
 CREATE TABLE "Usuarios" (
     "Id" serial   NOT NULL,
     "Correo" character varying   NOT NULL,
-    "Contrasena" character varying   NOT NULL,
-    "Nombres" character varying   NOT NULL,
-    "Apellidos" character varying   NOT NULL,
+    "Contrasena" character varying   NOT NULL,    
     "Role" integer   NOT NULL,
     "createdAt" timestamp NOT NULL,
     "updatedAt" timestamp NOT NULL,
@@ -26,6 +24,8 @@ CREATE TABLE "Caficultores" (
     "Nombre" character varying   NOT NULL,
     "Apellidos" character varying   NOT NULL,
     "UsuarioID" integer   NOT NULL,
+    "createdAt" timestamp NOT NULL,
+    "updatedAt" timestamp NOT NULL,
     CONSTRAINT "pk_Caficultor" PRIMARY KEY (
         "Id"
      )

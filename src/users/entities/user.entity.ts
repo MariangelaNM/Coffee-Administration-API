@@ -12,12 +12,6 @@ export class User {
   Contrasena: string;
 
   @Column()
-  Nombres: string;
-
-  @Column()
-  Apellidos: string;
-
-  @Column()
   Role: number;
 
   @Column()

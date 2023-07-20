@@ -59,8 +59,6 @@ export class UsersService {
       };
 
       user.updatedAt = new Date();
-      user.Nombres = user.Nombres.trim();
-      user.Apellidos = user.Apellidos.trim();
 
       return this.userRepository.updateUser(user);
     } catch (error) {
@@ -83,6 +81,19 @@ export class UsersService {
       }
 
       return this.userRepository.deleteUser(user);
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status ? error.status : HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async getUserByEmail(email: string) {
+    try {
+      const user = await this.userRepository.getUserByEmail(email);
+
+      return user;
     } catch (error) {
       throw new HttpException(
         error.message,
