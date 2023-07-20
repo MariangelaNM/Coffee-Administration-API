@@ -5,6 +5,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { HealthChecksModule } from './health-checks/health-checks.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
+import { CaficultoresModule } from './caficultores/caficultores.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { RolesModule } from './roles/roles.module';
     UsersModule,
     AuthenticationModule,
     RolesModule,
+    CaficultoresModule,
   ],
 })
 export class AppModule { }

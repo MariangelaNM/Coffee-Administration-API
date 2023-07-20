@@ -24,6 +24,8 @@ CREATE TABLE "Caficultores" (
     "Nombre" character varying   NOT NULL,
     "Apellidos" character varying   NOT NULL,
     "UsuarioID" integer   NOT NULL,
+    "createdAt" timestamp NOT NULL,
+    "updatedAt" timestamp NOT NULL,
     CONSTRAINT "pk_Caficultor" PRIMARY KEY (
         "Id"
      )
