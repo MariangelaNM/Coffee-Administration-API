@@ -3,10 +3,10 @@ import { DataSource } from 'typeorm';
 
 export const migrationDS = new DataSource({
   type: 'postgres' as const,
-  host: process.env.HOST,
-  port: parseInt(process.env.PORT),
-  username: process.env.USER,
-  password: process.env.PSW,
-  database: process.env.DATABASE,
+  host: 'localhost',
+  port: 5432,
+  username: 'postgres',
+  password: 'coffee1234',
+  database: 'postgres',
   migrations: [path.resolve(__dirname, 'migrations', '*')],
 });
