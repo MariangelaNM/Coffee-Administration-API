@@ -4,8 +4,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { HealthChecksModule } from './health-checks/health-checks.module';
 import { UsersModule } from './users/users.module';
+
+import { FincasModule } from './fincas/fincas.module';
+import { ZonasModule } from './zonas/zonas.module';
+
 import { RolesModule } from './roles/roles.module';
 import { CaficultoresModule } from './caficultores/caficultores.module';
+
 
 @Module({
   imports: [
@@ -25,9 +30,11 @@ import { CaficultoresModule } from './caficultores/caficultores.module';
     }),
     HealthChecksModule,
     UsersModule,
+    FincasModule,
+    ZonasModule,
     AuthenticationModule,
     RolesModule,
-    CaficultoresModule,
+    CaficultoresModule
   ],
 })
 export class AppModule { }
