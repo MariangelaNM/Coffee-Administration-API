@@ -1,7 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateZonaDto } from './dto/create-Zona.dto';
-import { Zona } from './entities/Zona.entity';
+import { CreateZonaDto } from './dto/create-zona.dto';
+import { Zona } from './entities/zona.entity';
 
 export class ZonasRepository {
   constructor(

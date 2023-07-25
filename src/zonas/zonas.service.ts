@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Validators } from 'src/helpers/Validators';
-import { CreateZonaDto, ZonaDto } from './dto/create-Zona.dto';
-import { UpdateZonaDto } from './dto/update-Zona.dto';
-import { ZonasRepository } from './Zonas.repository';
+import { CreateZonaDto, ZonaDto } from './dto/create-zona.dto';
+import { UpdateZonaDto } from './dto/update-zona.dto';
+import { ZonasRepository } from './zonas.repository';
 
 @Injectable()
 export class ZonasService {

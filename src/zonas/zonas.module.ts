@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ZonasService } from './Zonas.service';
-import { ZonasController } from './Zonas.controller';
+import { ZonasService } from './zonas.service';
+import { ZonasController } from './zonas.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Zona } from './entities/Zona.entity';
+import { Zona } from './entities/zona.entity';
 import { Repository } from 'typeorm';
-import { ZonasRepository } from './Zonas.repository';
+import { ZonasRepository } from './zonas.repository';
 import { CoffeeCrypto } from 'src/helpers/bycript/CoffeeCrypto';
 import { Validators } from 'src/helpers/Validators';
 
