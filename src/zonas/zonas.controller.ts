@@ -9,9 +9,9 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CreateZonaDto, ZonaDto } from './dto/create-Zona.dto';
-import { UpdateZonaDto } from './dto/update-Zona.dto';
-import { ZonasService } from './Zonas.service';
+import { CreateZonaDto, ZonaDto } from './dto/create-zona.dto';
+import { UpdateZonaDto } from './dto/update-zona.dto';
+import { ZonasService } from './zonas.service';
 
 @Controller('zonas')
 export class ZonasController {
