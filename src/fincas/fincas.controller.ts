@@ -8,11 +8,14 @@ import {
   Patch,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { CoffeeKeyGuard } from 'src/guards/coffee-key/coffee-key.guard';
 import { CreateFincaDto, FincaDto } from './dto/create-finca.dto';
 import { UpdateFincaDto } from './dto/update-finca.dto';
 import { FincasService } from './fincas.service';
 
+@UseGuards(CoffeeKeyGuard)
 @Controller('fincas')
 export class FincasController {
   constructor(private readonly FincasService: FincasService) {}
