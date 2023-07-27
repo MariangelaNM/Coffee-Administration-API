@@ -13,7 +13,7 @@ export class UsersService {
     private readonly validators: Validators,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async createUser(createUserDto: CreateUserDto) {
     try {
       this.validators.ValidatePayloadKeys(createUserDto);
 

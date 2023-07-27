@@ -24,7 +24,7 @@ export class CaficultoresService {
         Role: createCaficultorDto.Role,
       }
 
-      const user = await this.usersService.create(newUser);
+      const user = await this.usersService.createUser(newUser);
 
       return await this.caficultoresRepository.createCaficultor(createCaficultorDto, user.Id);
 
