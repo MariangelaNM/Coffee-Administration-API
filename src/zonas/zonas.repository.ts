@@ -7,7 +7,7 @@ export class ZonasRepository {
   constructor(
     @InjectRepository(Zona)
     private readonly ZonaRepository: Repository<Zona>,
-  ) {}
+  ) { }
 
   async createZona(createZonaDto: CreateZonaDto) {
     try {

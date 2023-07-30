@@ -81,11 +81,12 @@ CREATE TABLE "TipoRecoleccion" (
 CREATE TABLE "Periodos" (
     "Id" serial NOT NULL,
     "TipoRecoleccionID" integer   NOT NULL,
-    "Desde" date   NOT NULL,
-    "Hasta" date   NOT NULL,
-    "Value" money   NOT NULL,
-    "Modificado" date   NOT NULL,
+    "Desde" timestamp NOT NULL,
+    "Hasta" timestamp NOT NULL,
+    "Value" integer NOT NULL,
     "CaficultorID" integer   NOT NULL,
+    "createdAt" timestamp NOT NULL,
+    "updatedAt" timestamp NOT NULL,
     CONSTRAINT "pk_Periodo" PRIMARY KEY (
         "Id"
      )
@@ -136,3 +137,7 @@ ALTER TABLE "RegistroDeRecoleccion" ADD CONSTRAINT "fk_RegistroDeRecoleccion_Per
 REFERENCES "Periodos" ("Id");
 
 INSERT INTO public."Roles" values((select last_value from public."Roles_Id_seq"),'Administrador', 'Admin');
+
+INSERT INTO public."TipoRecoleccion" values(1,'Granea');
+INSERT INTO public."TipoRecoleccion" values(2,'Buena');
+INSERT INTO public."TipoRecoleccion" values(3,'Repela');

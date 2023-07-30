@@ -31,7 +31,11 @@ export class CaficultoresRepository {
     async getCaficultorByFullName(createCaficultorDto: CreateCaficultorDto) {
         try {
             const caficultor = await this.caficultorRepository.findOne({
-                where: [{ Apellidos: createCaficultorDto.Apellidos }, { Nombre: createCaficultorDto.Nombre }]
+                where:
+                {
+                    Apellidos: createCaficultorDto.Apellidos,
+                    Nombre: createCaficultorDto.Nombre
+                }
             });
 
             return caficultor;

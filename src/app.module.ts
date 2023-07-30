@@ -10,6 +10,7 @@ import { ZonasModule } from './zonas/zonas.module';
 
 import { RolesModule } from './roles/roles.module';
 import { CaficultoresModule } from './caficultores/caficultores.module';
+import { PeriodosModule } from './periodos/periodos.module';
 
 
 @Module({
@@ -34,7 +35,8 @@ import { CaficultoresModule } from './caficultores/caficultores.module';
     ZonasModule,
     AuthenticationModule,
     RolesModule,
-    CaficultoresModule
+    CaficultoresModule,
+    PeriodosModule
   ],
 })
 export class AppModule { }
