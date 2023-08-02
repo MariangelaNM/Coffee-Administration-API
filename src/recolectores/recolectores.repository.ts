@@ -9,65 +9,46 @@ export class RecolectoresRepository {
     private readonly recolectorRepository: Repository<Recolector>,
   ) { }
 
-  async createRecolector(createRecolectorDto: CreateRecolectorDto) {
-    try {
-      const recolector = this.recolectorRepository.create({
-        ...createRecolectorDto,
-      });
+  async createRecolector(createRecolectorDto: CreateRecolectorDto): Promise<Recolector> {
+    const recolector = this.recolectorRepository.create({
+      ...createRecolectorDto,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
 
-      recolector.createdAt = new Date();
-      recolector.updatedAt = recolector.createdAt;
-
-      const result = await this.recolectorRepository.save(recolector);
-
-      return result;
-    } catch (error) {
-      throw error;
-    }
+    return this.recolectorRepository.save(recolector);
   }
 
-  async getRecolectores(): Promise<Recolector[]> {
-    try {
-      const recolectores = await this.recolectorRepository.find();
-      return recolectores;
-    } catch (error) {
-      throw error;
-    }
+  async getAllRecolectores(): Promise<Recolector[]> {
+    return this.recolectorRepository.find();
   }
 
-  async getRecolectorById(Id: number): Promise<Recolector> {
-    try {
-      const recolector = await this.recolectorRepository.findOne({ where: { Id } });
-      return recolector;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async updateRecolector(recolector: Recolector): Promise<Recolector> {
-    try {
-      const updateRecolector = await this.recolectorRepository.save(recolector);
-      return updateRecolector;
-    } catch (error) {
-      throw error;
-    }
+  async getRecolectorById(id: number): Promise<Recolector> {
+    return this.searchRecolectorById(id);
   }
 
   async getRecolectorByIdentificacion(Identificacion: string): Promise<Recolector> {
-    try {
-      const recolector = await this.recolectorRepository.findOne({ where: { Identificacion } });
-      return recolector;
-    } catch (error) {
-      throw error;
-    }
+    return this.searchRecolectorByIdentificacion(Identificacion);
   }
 
-  async deleteRecolector(Id: number): Promise<boolean> {
-    try {
-      const result = await this.recolectorRepository.delete(Id);
-      return result.affected > 0;
-    } catch (error) {
-      throw error;
-    }
+  async updateRecolector(recolector: Recolector): Promise<Recolector> {
+    return this.recolectorRepository.save(recolector);
   }
+
+  async deleteRecolector(id: number): Promise<void> {
+    await this.recolectorRepository.delete(id);
+  }
+
+  private async searchRecolectorById(id: number): Promise<Recolector> {
+    return this.recolectorRepository.findOne({
+      where: [{ "Id":id }]
+    });
+  }
+
+  private async searchRecolectorByIdentificacion(Identificacion: string): Promise<Recolector> {
+    return this.recolectorRepository.findOne({
+      where: [{ Identificacion }]
+    });
+  }
+  
 }

@@ -29,7 +29,7 @@ export class RecolectoresController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updateRecolectorDto: UpdateRecolectorDto) {
+  async update(@Param('id') id: number, @Body() updateRecolectorDto: UpdateRecolectorDto) {
     return this.recolectoresService.update(id, updateRecolectorDto);
   }
 

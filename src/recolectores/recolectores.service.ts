@@ -33,7 +33,7 @@ export class RecolectoresService {
   }
 
   findAll() {
-    return this.recolectorRepository.getRecolectores();
+    return this.recolectorRepository.getAllRecolectores();
   }
 
   async findOne(identificacion: string) {
@@ -52,12 +52,12 @@ export class RecolectoresService {
     try {
       this.validators.ValidatePayloadKeys(updateRecolectorDto);
 
-      if (await this.recolectorRepository.getRecolectorByIdentificacion(updateRecolectorDto.Identificacion)) {
-        throw new HttpException(
-          `Ya existe un recolector con la Identificacion ${updateRecolectorDto.Identificacion}`,
-          HttpStatus.CONFLICT,
-        );
-      }
+      // if (await this.recolectorRepository.getRecolectorByIdentificacion(updateRecolectorDto.Identificacion)) {
+      //   throw new HttpException(
+      //     `Ya existe un recolector con la Identificacion ${updateRecolectorDto.Identificacion}`,
+      //     HttpStatus.CONFLICT,
+      //   );
+      // }
 
       let recolector = await this.recolectorRepository.getRecolectorById(Id);
 
