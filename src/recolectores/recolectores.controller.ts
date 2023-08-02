@@ -9,10 +9,12 @@ import { CoffeeKeyGuard } from 'src/guards/coffee-key/coffee-key.guard';
 export class RecolectoresController {
   constructor(private readonly recolectoresService: RecolectoresService) { }
 
+
+//Use estatus HTTP en las respuestas para obtener respuesta con los datos creados
   @Post()
   async create(@Body() createRecolectorDto: CreateRecolectorDto) {
-    const result = await this.recolectoresService.create(createRecolectorDto);
-    if (result) return HttpStatus.CREATED;
+    const createdRecolector = await this.recolectoresService.create(createRecolectorDto);
+    return { statusCode: HttpStatus.CREATED, data: createdRecolector };
   }
 
   @Get()
@@ -20,8 +22,9 @@ export class RecolectoresController {
     return this.recolectoresService.findAll();
   }
 
+  //Cambie decorador @Body() a @Param()
   @Get(':identificacion')
-  findOne(@Param('identificacion') identificacion: string, @Body() UpdateRecolectorDto: UpdateRecolectorDto) {
+  findOne(@Param('identificacion') identificacion: string) {
     return this.recolectoresService.findOne(identificacion);
   }
 
@@ -30,8 +33,9 @@ export class RecolectoresController {
     return this.recolectoresService.update(id, updateRecolectorDto);
   }
 
+  
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.recolectoresService.deleterecolector(+id);
   }
 }
