@@ -6,6 +6,7 @@ import { HealthChecksModule } from './health-checks/health-checks.module';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { CaficultoresModule } from './caficultores/caficultores.module';
+import { RecolectoresModule } from './recolectores/recolectores.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { CaficultoresModule } from './caficultores/caficultores.module';
     AuthenticationModule,
     RolesModule,
     CaficultoresModule,
+    RecolectoresModule,
   ],
 })
 export class AppModule { }
