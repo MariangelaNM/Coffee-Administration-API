@@ -1,0 +1,224 @@
+{
+	"info": {
+		"_postman_id": "22fd96ee-1643-4839-aaa5-f6747d0b9a44",
+		"name": "CA Recolectores",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28269444"
+	},
+	"item": [
+		{
+			"name": "Crear Caficultor",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "coffee-key",
+						"value": "4d4ee570-87bd-42bf-9bda-173f22622871",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Nombre\": \"Jose Luiz\",\n  \"Apellidos\": \"de Siqueira\",\n  \"Correo\": \"jdesiquiera@oic.com\",\n  \"Contrasena\" : \"01234\",\n  \"Role\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/caficultores",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"caficultores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Recolector",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "coffee-key",
+						"value": "4d4ee570-87bd-42bf-9bda-173f22622871",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"CaficultorID\": 1,\n  \"Nombre\": \"Laura\",\n  \"Apellidos\": \"Alcoba\",\n  \"Identificacion\": \"555444333\",\n  \"Cel\":900111999\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/recolectores",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"recolectores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Recolector",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "coffee-key",
+						"value": "4d4ee570-87bd-42bf-9bda-173f22622871",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n \"Identificacion\": \"321321321\",\n \"Nombre\": \"Pancho\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/recolectores/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"recolectores",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mostrar Recolectores",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "coffee-key",
+						"value": "4d4ee570-87bd-42bf-9bda-173f22622871",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/recolectores/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"recolectores",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get  Recolector By Identificacion",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "coffee-key",
+						"value": "4d4ee570-87bd-42bf-9bda-173f22622871",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/recolectores/123123123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"recolectores",
+						"123123123"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar Recolector",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "coffee-key",
+						"value": "4d4ee570-87bd-42bf-9bda-173f22622871",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/recolectores/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"recolectores",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
