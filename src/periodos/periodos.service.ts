@@ -60,7 +60,7 @@ export class PeriodosService {
       let oldPeriodo = await this.periodoRepository.getPeriodoById(+id);
 
       if (!oldPeriodo) {
-        throw new HttpException(`No existe el periodo.`, HttpStatus.NOT_FOUND,);
+        throw new HttpException(`No existe el periodo con id ${id}.`, HttpStatus.NOT_FOUND,);
       }
 
       oldPeriodo = {
