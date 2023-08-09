@@ -1,13 +1,13 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-Entity('Periodos')
+@Entity('Periodos')
 export class Periodo {
 
     @PrimaryGeneratedColumn()
     Id: number;
 
     @Column()
-    TipoRecollecionID: number;
+    TipoRecoleccionID: number;
 
     @Column()
     Desde: Date;

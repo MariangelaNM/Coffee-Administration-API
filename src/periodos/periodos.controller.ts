@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { PeriodosService } from './periodos.service';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { CoffeeKeyGuard } from 'src/guards/coffee-key/coffee-key.guard';
 import { CreatePeriodoDto } from './dto/create-periodo.dto';
 import { UpdatePeriodoDto } from './dto/update-periodo.dto';
+import { PeriodosService } from './periodos.service';
 
+@UseGuards(CoffeeKeyGuard)
 @Controller('periodos')
 export class PeriodosController {
   constructor(private readonly periodosService: PeriodosService) { }
@@ -18,8 +20,8 @@ export class PeriodosController {
   }
 
   @Patch(':id')
-  update(@Body() updatePeriodoDto: UpdatePeriodoDto) {
-    return this.periodosService.update(updatePeriodoDto);
+  update(@Body() updatePeriodoDto: UpdatePeriodoDto, @Param('id') id: string) {
+    return this.periodosService.update(id, updatePeriodoDto);
   }
 
   @Delete(':id')

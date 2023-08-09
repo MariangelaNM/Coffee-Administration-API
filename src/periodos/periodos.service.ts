@@ -13,8 +13,14 @@ export class PeriodosService {
   async create(createPeriodoDto: CreatePeriodoDto) {
     try {
       if (await this.periodoRepository.getPeriodoByCompositeKey(createPeriodoDto)) {
-        throw new Error('Ya existe un periodo con los mismos datos');
+        throw new HttpException(
+          'Ya existe un periodo con los mismos datos.',
+          HttpStatus.CONFLICT,
+        );
       }
+
+      createPeriodoDto.Desde = new Date(createPeriodoDto.Desde);
+      createPeriodoDto.Hasta = new Date(createPeriodoDto.Hasta);
 
       return await this.periodoRepository.createPeriodo(createPeriodoDto);
 
@@ -48,10 +54,10 @@ export class PeriodosService {
     }
   }
 
-  async update(updatePeriodoDto: UpdatePeriodoDto) {
+  async update(id: string, updatePeriodoDto: UpdatePeriodoDto) {
     try {
 
-      let oldPeriodo = await this.periodoRepository.getPeriodoByCompositeKey(updatePeriodoDto);
+      let oldPeriodo = await this.periodoRepository.getPeriodoById(+id);
 
       if (!oldPeriodo) {
         throw new HttpException(`No existe el periodo.`, HttpStatus.NOT_FOUND,);
