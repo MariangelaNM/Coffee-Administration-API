@@ -1,5 +1,5 @@
 export class CreatePeriodoDto {
-    TipoRecollecionID: number;
+    TipoRecoleccionID: number;
     Desde: Date;
     Hasta: Date;
     PrecioCajuela: number;

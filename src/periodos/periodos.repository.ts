@@ -40,7 +40,7 @@ export class PeriodosRepository {
             const periodo = await this.periodoRepository.findOne({
                 where: {
                     CaficultorID: currentPeriodo.CaficultorID,
-                    TipoRecollecionID: currentPeriodo.TipoRecollecionID,
+                    TipoRecoleccionID: currentPeriodo.TipoRecoleccionID,
                     Desde: currentPeriodo.Desde,
                     Hasta: currentPeriodo.Hasta,
                 },
