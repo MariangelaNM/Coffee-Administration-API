@@ -2,10 +2,14 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthenticationModule } from './authentication/authentication.module';
-import { HealthChecksModule } from './health-checks/health-checks.module';
-import { UsersModule } from './users/users.module';
-import { RolesModule } from './roles/roles.module';
 import { CaficultoresModule } from './caficultores/caficultores.module';
+import { FincasModule } from './fincas/fincas.module';
+import { HealthChecksModule } from './health-checks/health-checks.module';
+import { PeriodosModule } from './periodos/periodos.module';
+import { RolesModule } from './roles/roles.module';
+import { UsersModule } from './users/users.module';
+import { ZonasModule } from './zonas/zonas.module';
+
 import { RecolectoresModule } from './recolectores/recolectores.module';
 
 @Module({
@@ -25,10 +29,12 @@ import { RecolectoresModule } from './recolectores/recolectores.module';
       }),
     }),
     HealthChecksModule,
-    UsersModule,
+    FincasModule,
+    ZonasModule,
     AuthenticationModule,
     RolesModule,
     CaficultoresModule,
+    PeriodosModule
     RecolectoresModule,
   ],
 })
