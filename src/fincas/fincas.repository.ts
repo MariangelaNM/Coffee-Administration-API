@@ -45,7 +45,7 @@ export class FincasRepository {
     }
   }
 
-  async getFincaByCaficultorId(CaficultorID: number): Promise<Finca[]> {
+  async getFincasByCaficultorId(CaficultorID: number): Promise<Finca[]> {
     try {
       const finca = await this.fincaRepository.find({
         where: { CaficultorID },

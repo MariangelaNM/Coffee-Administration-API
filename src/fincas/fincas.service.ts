@@ -9,10 +9,24 @@ export class FincasService {
   constructor(
     private readonly fincaRepository: FincasRepository,
     private readonly validators: Validators,
-  ) {}
+  ) { }
 
   async create(createfincaDto: CreateFincaDto) {
     try {
+
+      const fincasByCaficultor = await this.fincaRepository.getFincasByCaficultorId(
+        createfincaDto.CaficultorID,
+      );
+
+      if (fincasByCaficultor.find((finca) => finca.Nombre === createfincaDto.Nombre
+        && finca.Ubicacion === createfincaDto.Ubicacion
+      )) {
+        throw new HttpException(
+          `Ya existe una finca con el nombre ${createfincaDto.Nombre} para el caficultor ${createfincaDto.CaficultorID}`,
+          HttpStatus.CONFLICT,
+        );
+      }
+
       this.validators.ValidatePayloadKeys(createfincaDto);
 
       return await this.fincaRepository.createFinca(createfincaDto);
@@ -26,7 +40,7 @@ export class FincasService {
 
   async getByCaficultor(createfincaDto: FincaDto) {
     try {
-      const finca = await this.fincaRepository.getFincaByCaficultorId(
+      const finca = await this.fincaRepository.getFincasByCaficultorId(
         createfincaDto.CaficultorID,
       );
       if (!finca) {
