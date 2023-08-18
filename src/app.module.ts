@@ -7,7 +7,6 @@ import { FincasModule } from './fincas/fincas.module';
 import { HealthChecksModule } from './health-checks/health-checks.module';
 import { PeriodosModule } from './periodos/periodos.module';
 import { RolesModule } from './roles/roles.module';
-import { UsersModule } from './users/users.module';
 import { ZonasModule } from './zonas/zonas.module';
 
 import { RecolectoresModule } from './recolectores/recolectores.module';
@@ -34,7 +33,7 @@ import { RecolectoresModule } from './recolectores/recolectores.module';
     AuthenticationModule,
     RolesModule,
     CaficultoresModule,
-    PeriodosModule
+    PeriodosModule,
     RecolectoresModule,
   ],
 })
