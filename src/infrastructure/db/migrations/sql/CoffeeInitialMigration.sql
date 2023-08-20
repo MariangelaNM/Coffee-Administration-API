@@ -34,10 +34,12 @@ CREATE TABLE "Caficultores" (
 CREATE TABLE "Recolectores" (
     "Id" serial NOT NULL,
     "CaficultorID" integer   NOT NULL,
-    "Name" character varying   NOT NULL,
+    "Nombre" character varying   NOT NULL,
     "Apellidos" character varying   NULL,
     "Identificacion" character varying   NULL,
     "Cel" integer   NULL,
+    "createdAt" timestamp NOT NULL,
+    "updatedAt" timestamp NOT NULL,
     CONSTRAINT "pk_Recolector" PRIMARY KEY (
         "Id"
      )
