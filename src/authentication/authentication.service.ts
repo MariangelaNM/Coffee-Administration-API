@@ -1,10 +1,12 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { response } from 'express';
+import jwtConfig from 'src/authentication/config/jwt.config';
 import { CoffeeCrypto } from 'src/helpers/bycript/CoffeeCrypto';
 import { UsersService } from 'src/users/users.service';
 import { LogInDto } from './dto/LogInDto';
-import { JwtService } from '@nestjs/jwt';
-import jwtConfig from 'src/authentication/config/jwt.config';
-import { ConfigType } from '@nestjs/config';
+import { LogInResponseDto } from './dto/LogInResponseDto';
 
 @Injectable()
 export class AuthenticationService {
@@ -16,7 +18,7 @@ export class AuthenticationService {
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
   ) { }
 
-  async LogIn(createAuthenticationDto: LogInDto) {
+  async LogIn(createAuthenticationDto: LogInDto): Promise<LogInResponseDto> {
     const credentials = await this.usersService.getUserByEmail(
       createAuthenticationDto.email,
     );
@@ -47,6 +49,11 @@ export class AuthenticationService {
       },
     );
 
-    return { t: token };
+    const response: LogInResponseDto = {
+      token: token,
+      id: credentials.Id,
+    };
+
+    return response;
   }
 }
