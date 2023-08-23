@@ -97,4 +97,16 @@ export class CaficultoresService {
       );
     }
   }
+
+  async getByUserId(userId: number) {
+    try {
+      return await this.caficultoresRepository.getCaficultorByUserId(userId);
+    }
+    catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status ? error.status : HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }

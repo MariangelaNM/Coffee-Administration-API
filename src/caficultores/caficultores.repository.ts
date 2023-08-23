@@ -62,4 +62,13 @@ export class CaficultoresRepository {
             throw error;
         }
     }
+
+    async getCaficultorByUserId(UsuarioID: number): Promise<Caficultor> {
+        try {
+            const caficultor = await this.caficultorRepository.findOne({ where: { UsuarioID } });
+            return caficultor;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
