@@ -1,12 +1,12 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { response } from 'express';
 import jwtConfig from 'src/authentication/config/jwt.config';
 import { CoffeeCrypto } from 'src/helpers/bycript/CoffeeCrypto';
 import { UsersService } from 'src/users/users.service';
 import { LogInDto } from './dto/LogInDto';
 import { LogInResponseDto } from './dto/LogInResponseDto';
+import { CaficultoresService } from 'src/caficultores/caficultores.service';
 
 @Injectable()
 export class AuthenticationService {
@@ -14,6 +14,7 @@ export class AuthenticationService {
     private readonly usersService: UsersService,
     private readonly coffeeCrypto: CoffeeCrypto,
     private readonly jwtService: JwtService,
+    private readonly caficultorService: CaficultoresService,
     @Inject(jwtConfig.KEY)
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
   ) { }
@@ -49,9 +50,15 @@ export class AuthenticationService {
       },
     );
 
+    const caficultor = await this.caficultorService.getByUserId(credentials.Id);
+
+    if (!caficultor) {
+      throw new UnauthorizedException('El caficultor no existe.');
+    }
+
     const response: LogInResponseDto = {
       token: token,
-      id: credentials.Id,
+      id: caficultor.Id,
     };
 
     return response;

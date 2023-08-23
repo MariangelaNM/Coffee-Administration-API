@@ -13,6 +13,7 @@ import { CoffeeCrypto } from 'src/helpers/bycript/CoffeeCrypto';
 @Module({
   imports: [TypeOrmModule.forFeature([Caficultor]), Repository, UsersModule],
   controllers: [CaficultoresController],
-  providers: [CaficultoresService, CaficultoresRepository, UsersService, CoffeeCrypto, Validators]
+  providers: [CaficultoresService, CaficultoresRepository, UsersService, CoffeeCrypto, Validators],
+  exports: [CaficultoresService, CaficultoresRepository]
 })
 export class CaficultoresModule { }

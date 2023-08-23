@@ -8,6 +8,8 @@ import { AuthenticationService } from './authentication.service';
 import { JwtModule } from '@nestjs/jwt';
 import jwtConfig from './config/jwt.config';
 import { ConfigModule } from '@nestjs/config';
+import { CaficultoresModule } from 'src/caficultores/caficultores.module';
+import { CaficultoresService } from 'src/caficultores/caficultores.service';
 
 @Module({
   controllers: [AuthenticationController],
@@ -15,7 +17,8 @@ import { ConfigModule } from '@nestjs/config';
     UsersModule,
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(jwtConfig),
+    CaficultoresModule
   ],
-  providers: [AuthenticationService, UsersService, CoffeeCrypto, Validators],
+  providers: [AuthenticationService, UsersService, CoffeeCrypto, Validators, CaficultoresService],
 })
 export class AuthenticationModule { }
