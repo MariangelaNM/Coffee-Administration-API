@@ -73,7 +73,7 @@ export class CaficultoresService {
         );
       }
 
-      let user = await this.usersService.getUserByEmail(updateCaficultoreDto.Correo);
+      let user = await this.usersService.getUserById(existingCaficultor.UsuarioID);
 
       user = {
         ...user,

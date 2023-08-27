@@ -11,7 +11,7 @@ export class UsersService {
     private readonly userRepository: UsersRepository,
     private readonly coffeeCrypto: CoffeeCrypto,
     private readonly validators: Validators,
-  ) {}
+  ) { }
 
   async createUser(createUserDto: CreateUserDto) {
     try {
@@ -92,6 +92,19 @@ export class UsersService {
   async getUserByEmail(email: string) {
     try {
       const user = await this.userRepository.getUserByEmail(email);
+
+      return user;
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status ? error.status : HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async getUserById(id: number) {
+    try {
+      const user = await this.userRepository.getUserById(id);
 
       return user;
     } catch (error) {
