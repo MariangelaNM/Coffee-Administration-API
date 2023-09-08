@@ -33,12 +33,12 @@ export class RecolectoresController {
     return this.recolectoresService.findAll();
   }
 
-  @Get(':id')
+  @Get(':id/recolector')
   findOneById(@Param('id') id: number) {
     return this.recolectoresService.findOneById(id);
   }
 
-  @Get(':caficultorId')
+  @Get(':caficultorId/caficultor')
   async findAllByCaficultor(@Param('caficultorId') caficultorId: number) {
     return this.recolectoresService.findAllByCaficultor(caficultorId);
   }

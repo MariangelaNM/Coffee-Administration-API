@@ -59,41 +59,36 @@ export class RecolectoresService {
   
     return recolector;
   }
-  
-
-  async findOne(identificacion: string) {
-    const recolector = await this.recolectorRepository.getRecolectorByIdentificacion(identificacion);
-    if (!recolector) {
-      throw new HttpException(
-        `No existe el recolector con la identificacion ${identificacion}`,
-        HttpStatus.NOT_FOUND,
-      );
-    }
-
-    return recolector;
-  }
 
   async update(Id: number, updateRecolectorDto: UpdateRecolectorDto) {
     try {
       this.validators.ValidatePayloadKeys(updateRecolectorDto);
-
-      if (await this.recolectorRepository.getRecolectorByIdentificacion(updateRecolectorDto.Identificacion)) {
+  
+      const recolector = await this.recolectorRepository.getRecolectorById(Id);
+  
+      if (!recolector) {
         throw new HttpException(
-          `Ya existe un recolector con la Identificacion ${updateRecolectorDto.Identificacion}`,
-          HttpStatus.CONFLICT,
+          `No existe un recolector con el ID ${Id}`,
+          HttpStatus.NOT_FOUND,
         );
       }
-
-      let recolector = await this.recolectorRepository.getRecolectorById(Id);
-
-      recolector = {
-        ...recolector,
-        ...updateRecolectorDto,
-      };
-
-      recolector.Nombre = recolector.Nombre.trim();
-      recolector.Apellidos = recolector.Apellidos.trim();
-      recolector.Identificacion = recolector.Identificacion.trim();
+  
+      // Actualiza solo los campos proporcionados en updateRecolectorDto
+      if (updateRecolectorDto.Nombre) {
+        recolector.Nombre = updateRecolectorDto.Nombre.trim();
+      }
+      if (updateRecolectorDto.Apellidos) {
+        recolector.Apellidos = updateRecolectorDto.Apellidos.trim();
+      }
+      if (updateRecolectorDto.Identificacion) {
+        recolector.Identificacion = updateRecolectorDto.Identificacion.trim();
+      }
+      if (updateRecolectorDto.Cel) {
+        recolector.Cel = updateRecolectorDto.Cel;
+      }
+  
+      // Actualiza otros campos aquí si es necesario
+  
       return this.recolectorRepository.updateRecolector(recolector);
     } catch (error) {
       throw new HttpException(
@@ -102,6 +97,7 @@ export class RecolectoresService {
       );
     }
   }
+  
 
   async deleterecolector(id: number) {
     try {
