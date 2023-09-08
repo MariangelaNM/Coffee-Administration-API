@@ -36,6 +36,19 @@ export class RecolectoresService {
     return this.recolectorRepository.getAllRecolectores();
   }
 
+  async findAllByCaficultor(caficultorId: number) {
+    const recolectores = await this.recolectorRepository.getRecolectoresByCaficultorId(caficultorId);
+    if (!recolectores || recolectores.length === 0) {
+      throw new HttpException(
+        `No existen recolectores asociados al caficultor con ID ${caficultorId}`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  
+    return recolectores;
+  }
+  
+
   async findOne(identificacion: string) {
     const recolector = await this.recolectorRepository.getRecolectorByIdentificacion(identificacion);
     if (!recolector) {
