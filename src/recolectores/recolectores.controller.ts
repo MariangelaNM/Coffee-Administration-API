@@ -52,7 +52,12 @@ export class RecolectoresController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.recolectoresService.deleterecolector(+id);
+  async remove(@Param('id') id: number) {
+    const { nombre, apellido } =
+      await this.recolectoresService.getRecolectorNameAndApellidoById(id);
+    await this.recolectoresService.deleterecolector(+id);
+    return {
+      message: `El recolector ${nombre} ${apellido} ha sido eliminado correctamente.`,
+    };
   }
 }
