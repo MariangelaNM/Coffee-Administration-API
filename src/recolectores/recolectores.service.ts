@@ -48,6 +48,18 @@ export class RecolectoresService {
     return recolectores;
   }
   
+  async findOneById(id: number) {
+    const recolector = await this.recolectorRepository.getRecolectorById(id);
+    if (!recolector) {
+      throw new HttpException(
+        `No existe un recolector con el ID ${id}`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  
+    return recolector;
+  }
+  
 
   async findOne(identificacion: string) {
     const recolector = await this.recolectorRepository.getRecolectorByIdentificacion(identificacion);
