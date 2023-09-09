@@ -31,6 +31,10 @@ export class RecolectoresRepository {
     return this.searchRecolectorByIdentificacion(Identificacion);
   }
 
+  async getRecolectoresByCaficultorId(caficultorId: number): Promise<Recolector[]> {
+    return this.recolectorRepository.find({ where: { CaficultorID: caficultorId } });
+  }  
+
   async updateRecolector(recolector: Recolector): Promise<Recolector> {
     return this.recolectorRepository.save(recolector);
   }
