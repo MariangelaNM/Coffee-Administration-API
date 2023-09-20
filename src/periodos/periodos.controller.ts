@@ -18,6 +18,10 @@ export class PeriodosController {
   findOne(@Param('caficultorId') caficultorId: string) {
     return this.periodosService.findByCaficultorId(+caficultorId);
   }
+  @Get('Periodo/:id')
+  Put(@Param('id') id: string) {
+    return this.periodosService.findOne(Number(id));
+  }
 
   @Patch(':id')
   update(@Body() updatePeriodoDto: UpdatePeriodoDto, @Param('id') id: string) {
