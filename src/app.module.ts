@@ -11,6 +11,7 @@ import { ZonasModule } from './zonas/zonas.module';
 
 import { RecolectoresModule } from './recolectores/recolectores.module';
 import { TiposRecoleccionModule } from './tipos-recoleccion/tipos-recoleccion.module';
+import { RegistroModule } from './registro/registro.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { TiposRecoleccionModule } from './tipos-recoleccion/tipos-recoleccion.mo
     PeriodosModule,
     RecolectoresModule,
     TiposRecoleccionModule,
+    RegistroModule,
   ],
 })
 export class AppModule { }
