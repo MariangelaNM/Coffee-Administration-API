@@ -21,6 +21,7 @@ export class RegistroRecoleccion {
   @IsInt({ message: 'Cuartillos debe ser un número entero.' })
   @Min(0, { message: 'Cuartillos debe ser mayor o igual a 0.' })
   @Max(3, { message: 'Cuartillos debe ser menor o igual a 3.' })
+  @Column()
   Cuartillos: number;
 
   @Column()
@@ -28,4 +29,6 @@ export class RegistroRecoleccion {
 
   @Column()
   Modificado: Date;
+    @Column()
+  Status: Boolean;
 }
