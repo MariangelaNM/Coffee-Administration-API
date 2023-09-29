@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Validators } from 'src/helpers/Validators';
 import { CoffeeCrypto } from 'src/helpers/bycript/CoffeeCrypto';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import { CreateRegistroRecoleccionDto } from './dto/create-registro.dto';
 import { RegistroRecoleccion } from './entities/registro.entity';
 import { RegistroNotFoundException } from './registro.exceptions';
@@ -73,13 +73,17 @@ export class RegistroService {
       where: { Id: id },
     };
 
-    const registro = await this.registroRepository.findOne(findOptions);
+    // Encuentra el registro que se va a eliminar
+    const registroAEliminar = await this.registroRepository.findOne(
+      findOptions,
+    );
 
-    if (!registro) {
+    if (!registroAEliminar) {
       throw new NotFoundException(`Registro con ID ${id} no encontrado.`);
     }
 
-    await this.registroRepository.remove(registro);
+    // Elimina el registro
+    await this.registroRepository.remove(registroAEliminar);
   }
 
   async findRegistrosRecoleccionByRegistroId(
@@ -140,8 +144,45 @@ export class RegistroService {
     // Devuelve los resultados como sea necesario
   }
 
-  async findResumenSemanal(): Promise<any> {
+  async checkRecolectorExists(recolectorId: number): Promise<boolean> {
+    // Verifica si el recolector existe en la base de datos
+    const recolector = await this.registroRepository.findOne({
+      where: { RecolectorID: recolectorId },
+    });
+    return !!recolector;
+  }
+
+  async findResumenSemanal(
+    fechaInicio: string,
+    fechaFin: string,
+    recolectorId: number,
+  ): Promise<any> {
+    // Convierte las cadenas de fecha al formato "YYYY-MM-DD"
+    const fechaInicioDate = new Date(fechaInicio);
+    const fechaFinDate = new Date(fechaFin);
+
     // Implementa la lógica para obtener un resumen semanal del total de café recolectado por cada recolector
-    // Devuelve los resultados como sea necesario
+    // También filtra por el RecolectorId si se proporciona
+    const whereConditions: Record<string, any> = {
+      Creado: Between(fechaInicioDate, fechaFinDate), // Filtra por el rango de fechas
+    };
+
+    if (recolectorId) {
+      // Verifica si el RecolectorId es válido
+      const recolectorExist = await this.checkRecolectorExists(recolectorId);
+      if (!recolectorExist) {
+        throw new NotFoundException(
+          `El recolector con ID ${recolectorId} no existe.`,
+        );
+      }
+
+      whereConditions.RecolectorID = recolectorId; // Filtra por RecolectorId si está presente
+    }
+
+    const resumenSemanal = await this.registroRepository.find({
+      where: whereConditions,
+    });
+
+    return resumenSemanal;
   }
 }

@@ -11,6 +11,8 @@ import {
   Query,
   HttpException,
   HttpStatus,
+  NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
 import { RegistroService } from './registro.service';
 import { CreateRegistroRecoleccionDto } from './dto/create-registro.dto';
@@ -44,8 +46,9 @@ export class RegistroController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: number): Promise<void> {
-    return await this.registroService.deleteRegistroRecoleccion(id);
+  async remove(@Param('id') id: number): Promise<string> {
+    await this.registroService.deleteRegistroRecoleccion(id);
+    return `Registro con ID ${id} fue eliminado exitosamente.`;
   }
 
   @Get(':registroId/recolecciones')
@@ -112,7 +115,37 @@ export class RegistroController {
   }
 
   @Get('resumen/semanal')
-  async findResumenSemanal(): Promise<any> {
-    return await this.registroService.findResumenSemanal();
+  async findResumenSemanal(
+    @Query('fechaInicio') fechaInicio: string,
+    @Query('fechaFin') fechaFin: string,
+    @Query('recolectorId') recolectorId: number,
+  ): Promise<any> {
+    // Verifica si el RecolectorId es válido
+    if (recolectorId) {
+      const recolectorExist = await this.registroService.checkRecolectorExists(
+        recolectorId,
+      );
+      if (!recolectorExist) {
+        throw new NotFoundException(
+          `El recolector con ID ${recolectorId} no existe.`,
+        );
+      }
+    }
+
+    // Verifica si las fechas son válidas
+    const fechaInicioDate = new Date(fechaInicio);
+    const fechaFinDate = new Date(fechaFin);
+
+    if (isNaN(fechaInicioDate.getTime()) || isNaN(fechaFinDate.getTime())) {
+      throw new BadRequestException(
+        'Las fechas proporcionadas no son válidas.',
+      );
+    }
+
+    return await this.registroService.findResumenSemanal(
+      fechaInicio,
+      fechaFin,
+      recolectorId,
+    );
   }
 }
