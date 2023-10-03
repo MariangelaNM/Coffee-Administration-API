@@ -22,7 +22,7 @@ import { RegistroModule } from './registro/registro.module';
       useFactory: () => ({
         type: 'postgres' as const,
         host: process.env.HOST,
-        port: parseInt(process.env.PORT),
+        port: parseInt(process.env.PG_PORT),
         username: process.env.DB_USER,
         password: process.env.PSW,
         database: process.env.DATABASE,
