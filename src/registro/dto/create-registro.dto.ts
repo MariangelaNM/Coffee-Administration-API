@@ -5,5 +5,6 @@ export class CreateRegistroRecoleccionDto {
   Cajuelas: number;
   Cuartillos: number;
   Creado: string;
-  Modificado: string
+  Modificado: string;
+  Status:boolean;
 }
