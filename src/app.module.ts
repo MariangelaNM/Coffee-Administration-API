@@ -27,6 +27,13 @@ import { RegistroModule } from './registro/registro.module';
         password: process.env.PSW,
         database: process.env.DATABASE,
         autoLoadEntities: true,
+        ssl: process.env.SSL === 'true',
+        extra: {
+          ssl: process.env.SSL === 'true' ? {
+            rejectUnauthorized: false,
+          }
+            : null,
+        },
       }),
     }),
     HealthChecksModule,
