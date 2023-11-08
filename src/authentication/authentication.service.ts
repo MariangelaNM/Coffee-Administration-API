@@ -59,6 +59,7 @@ export class AuthenticationService {
     const response: LogInResponseDto = {
       token: token,
       id: caficultor.Id,
+      nombre: caficultor.Nombre + ' ' + caficultor.Apellidos,
     };
 
     return response;
