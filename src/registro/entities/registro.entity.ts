@@ -31,4 +31,6 @@ export class RegistroRecoleccion {
   Modificado: Date;
     @Column()
   Status: Boolean;
+  @Column()
+  Total: number;
 }
