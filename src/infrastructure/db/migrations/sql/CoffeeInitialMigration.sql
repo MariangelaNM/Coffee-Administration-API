@@ -103,7 +103,6 @@ CREATE TABLE "RegistroDeRecoleccion" (
     "Cuartillos" integer   NOT NULL,
     "Creado" date   NOT NULL,
     "Modificado" date   NOT NULL,
-    "Total" numeric not null,
     CONSTRAINT "pk_RegistroDeRecoleccion" PRIMARY KEY (
         "Id"
      )

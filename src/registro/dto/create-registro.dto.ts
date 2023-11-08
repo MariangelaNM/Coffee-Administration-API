@@ -7,5 +7,4 @@ export class CreateRegistroRecoleccionDto {
   Creado: string;
   Modificado: string;
   Status:boolean;
-  Total:number;
 }
